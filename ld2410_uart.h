@@ -17,19 +17,19 @@ public:
   Sensor *stillTargetEnergy = new Sensor();
   Sensor *detectDistance = new Sensor();
 
-  Number *maxMovingDistanceRange;
-  Number *maxStillDistanceRange;
+  // Number *maxMovingDistanceRange;
+  // Number *maxStillDistanceRange;
   int movingSensitivities[9] = {0};
   int stillSensitivities[9] = {0};
-  Number *noneDuration;
+  // Number *noneDuration;
 
   long lastPeriodicMillis = millis();
 
-  void setNumbers(Number *maxMovingDistanceRange_, Number *maxStillDistanceRange_, Number *noneDuration_){
-    maxMovingDistanceRange = maxMovingDistanceRange_;
-    maxStillDistanceRange = maxStillDistanceRange_;
-    noneDuration = noneDuration_;
-  }
+  // void setNumbers(Number *maxMovingDistanceRange_, Number *maxStillDistanceRange_, Number *noneDuration_){
+  //   maxMovingDistanceRange = maxMovingDistanceRange_;
+  //   maxStillDistanceRange = maxStillDistanceRange_;
+  //   noneDuration = noneDuration_;
+  // }
 
   void sendCommand(char *commandStr, char *commandValue, int commandValueLen)
   {
@@ -145,39 +145,39 @@ public:
       return;
     }
     lastCommandSuccess->publish_state(true);
-    switch (buffer[6])
-    {
-    case 0x61: // Query parameters response
-    {
-      if (buffer[10] != 0xAA)
-        return; // value head=0xAA
-      /*
-        Moving distance range: 13th byte
-        Still distance range: 14th byte
-      */
-      maxMovingDistanceRange->publish_state(buffer[12]);
-      maxStillDistanceRange->publish_state(buffer[13]);
-      /*
-        Moving Sensitivities: 15~23th bytes
-        Still Sensitivities: 24~32th bytes
-      */
-      for (int i = 0; i < 9; i++)
-      {
-        movingSensitivities[i] = buffer[14 + i];
-      }
-      for (int i = 0; i < 9; i++)
-      {
-        stillSensitivities[i] = buffer[23 + i];
-      }
-      /*
-        None Duration: 33~34th bytes
-      */
-      noneDuration->publish_state(twoByteToInt(buffer[32], buffer[33]));
-    }
-    break;
-    default:
-      break;
-    }
+    // switch (buffer[6])
+    // {
+    // case 0x61: // Query parameters response
+    // {
+    //   if (buffer[10] != 0xAA)
+    //     return; // value head=0xAA
+    //   /*
+    //     Moving distance range: 13th byte
+    //     Still distance range: 14th byte
+    //   */
+    //   // maxMovingDistanceRange->publish_state(buffer[12]);
+    //   maxStillDistanceRange->publish_state(buffer[13]);
+    //   /*
+    //     Moving Sensitivities: 15~23th bytes
+    //     Still Sensitivities: 24~32th bytes
+    //   */
+    //   for (int i = 0; i < 9; i++)
+    //   {
+    //     movingSensitivities[i] = buffer[14 + i];
+    //   }
+    //   for (int i = 0; i < 9; i++)
+    //   {
+    //     stillSensitivities[i] = buffer[23 + i];
+    //   }
+    //   /*
+    //     None Duration: 33~34th bytes
+    //   */
+    //   noneDuration->publish_state(twoByteToInt(buffer[32], buffer[33]));
+    // }
+    // break;
+    // default:
+    //   break;
+    // }
   }
 
   void readline(int readch, char *buffer, int len)
